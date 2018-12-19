@@ -28,7 +28,7 @@ public class StudentController extends BaseController {
     public String index() {
         String studentName = (String) getSession().getAttribute(SESSION_KEY);
         if (studentName!=null){
-            return FORWARD+"/stu/index";
+            return "/student/index";
         }
         return REDIRECT+"/stu/login";
     }
