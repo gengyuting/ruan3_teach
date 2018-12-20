@@ -3,7 +3,9 @@ package com.tt.teach.controller;
 import com.tt.teach.pojo.Student;
 import com.tt.teach.service.StudentService;
 import com.tt.teach.utils.BaseController;
+import com.tt.teach.utils.JsonResult;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -78,8 +80,33 @@ public class StudentController extends BaseController {
     }
 
     //删除学生的方法
-    @RequestMapping(value = "/deleteStudent",method = RequestMethod.GET)
-    public String deleteStudent() {
-        return "明见";
+    @RequestMapping(value = "/deleteStudent/{stuNo}",method = RequestMethod.DELETE)
+    @ResponseBody
+    public Object deleteStudent(@PathVariable Integer stuNo) {
+        int result = studentService.deleteStudent(stuNo);
+        if (result>0){
+            return JsonResult.ok("删除成功！",result);
+        }
+        return JsonResult.no("删除失败",result);
+    }
+
+    //修改学生信息的方法
+    @RequestMapping(value = "/updateStudent", method = RequestMethod.POST)
+    public String updateStudent() {
+        String xuehao = getRequest().getParameter("stuNo");
+        Integer stuNo = Integer.parseInt(xuehao);
+        String stuName = getRequest().getParameter("stuName");
+        String stuPwd = getRequest().getParameter("stuPwd");
+        String stuPhone = getRequest().getParameter("stuPhone");
+        Student student = new Student();
+        student.setStudentNo(stuNo);
+        student.setStudentName(stuName);
+        student.setLoginPwd(stuPwd);
+        student.setPhone(stuPhone);
+        int result = studentService.updateStudent(student);
+        if (result>0){
+            return FORWARD+"/stu/student";
+        }
+        return FORWARD+"/stu/student";
     }
 }

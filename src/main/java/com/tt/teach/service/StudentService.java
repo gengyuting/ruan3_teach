@@ -9,5 +9,7 @@ public interface StudentService {
 
     List<Student> getStudentList();
 
+    int updateStudent(Student student);
 
+    int deleteStudent(Integer stuNo);
 }
