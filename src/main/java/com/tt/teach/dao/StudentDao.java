@@ -20,4 +20,6 @@ public interface StudentDao {
     int updateStudent(Student student);
     @Delete("delete from student where studentNo = #{stuNo}")
     int deleteStudent(Integer stuNo);
+    @Select("select * from student where studentNo = #{studentNo}")
+    Student getStuByNo(Integer studentNo);
 }
